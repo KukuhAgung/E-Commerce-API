@@ -6,7 +6,12 @@ import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import ErrorPage from "./pages/404";
 import ProductsPage from "./pages/products";
-
+import ProfilePage from "./pages/profile";
+import DetailProductPage from "./pages/detailProduct";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import DarkModeContextProvider from "./context/DarkMode";
+import { TotalPriceProvider } from "./context/TotalPriceContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,17 +23,31 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "register",
+    path: "/register",
     element: <RegisterPage />,
   },
   {
-    path: "products",
+    path: "/products",
     element: <ProductsPage />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
+  },
+  {
+    path: "/product/:id",
+    element: <DetailProductPage />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <DarkModeContextProvider>
+        <TotalPriceProvider>
+          <RouterProvider router={router} />
+        </TotalPriceProvider>
+      </DarkModeContextProvider>
+    </Provider>
   </React.StrictMode>
 );
